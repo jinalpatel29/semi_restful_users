@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Users</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'users/style.css'%}">
+</head>
+<body>
+    <div class="container">
+
+        <h1>Users </h1>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+            
+            {%if users%}
+                {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{user.first_name}} {{user.last_name}}</td>
+                <td>{{user.email_id}}</td>
+                <td>{{user.created_at}}</td>
+                <td><a href="/users/{{user.id}}">Show  </a>| 
+                    <a href="/users/{{user.id}}/edit">  Edit</a>|
+                    <form action="/users/{{user.id}}/delete" method="post">
+                        {% csrf_token %}
+                        <button type="submit" id="delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {%endfor%}
+            {%endif%}
+        </table>
+        <p><a href="/users/new">Add a new user</a></p>
+    </div>
+</body>
+</html>
